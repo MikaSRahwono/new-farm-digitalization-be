@@ -1,5 +1,5 @@
 // services/animalService.js
-const { Animal, Health, Medication, Vitamin, Vaccine, LactationData, MilkData, WeightData, YearlyData, MonthlyData } = require('../models');
+const { Animal, Health, Medication, HistoryItem, Vitamin, Vaccine, LactationData, MilkData, WeightData, YearlyData, MonthlyData } = require('../models');
 
 /**
  * Create a new animal record
@@ -34,22 +34,42 @@ const getAnimalById = async (id) => {
         {
           model: Health,
           as: 'health',
-          required: false
+          include: [{
+            model: HistoryItem,
+            as: 'historyItems',
+            where: { conditionType: 'Health' },
+            required: false,
+          }],
         },
         {
           model: Medication,
           as: 'medication',
-          required: false
+          include: [{
+            model: HistoryItem,
+            as: 'historyItems',
+            where: { conditionType: 'Medication' },
+            required: false,
+          }],
         },
         {
           model: Vitamin,
           as: 'vitamin',
-          required: false
+          include: [{
+            model: HistoryItem,
+            as: 'historyItems',
+            where: { conditionType: 'Vitamin' },
+            required: false,
+          }],
         },
         {
           model: Vaccine,
           as: 'vaccine',
-          required: false
+          include: [{
+            model: HistoryItem,
+            as: 'historyItems',
+            where: { conditionType: 'Vaccine' },
+            required: false,
+          }],
         },
         {
           model: LactationData,
