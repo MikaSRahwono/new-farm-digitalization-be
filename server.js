@@ -15,9 +15,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: 'http://your-frontend-domain.com', // Adjust as needed
-  optionsSuccessStatus: 200,
-}));
+    origin: '*',
+  }));
 app.use(helmet());
 app.use(morgan('combined'));
 
