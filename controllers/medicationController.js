@@ -8,10 +8,10 @@ const createMedication = async (req, res) => {
   try {
     const { animalId, current_condition, history_items } = req.body;
     const medication = await medicationService.createMedication(animalId, { current_condition, history_items });
-    res.status(201).json(medication);
+    res.status(201).json({success: true, data: medication});
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -23,12 +23,12 @@ const getMedicationByAnimalId = async (req, res) => {
     const { animalId } = req.params;
     const medication = await medicationService.getMedicationByAnimalId(animalId);
     if (!medication) {
-      return res.status(404).json({ message: 'Medication data not found for this animal.' });
+      return res.status(404).json({ success: false,  message: 'Medication data not found for this animal.' });
     }
-    res.status(200).json(medication);
+    res.status(200).json({success: true, data: medication});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -41,12 +41,12 @@ const updateMedication = async (req, res) => {
     const updateData = req.body;
     const medication = await medicationService.updateMedication(id, updateData);
     if (!medication) {
-      return res.status(404).json({ message: 'Medication data not found.' });
+      return res.status(404).json({ success: false, message: 'Medication data not found.' });
     }
-    res.status(200).json(medication);
+    res.status(200).json({success: true, data: medication});
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -58,12 +58,12 @@ const deleteMedication = async (req, res) => {
     const { id } = req.params;
     const success = await medicationService.deleteMedication(id);
     if (!success) {
-      return res.status(404).json({ message: 'Medication data not found.' });
+      return res.status(404).json({ success: false, message: 'Medication data not found.' });
     }
-    res.status(200).json({ message: 'Medication data deleted successfully.' });
+    res.status(200).json({ success: true, message: 'Medication data deleted successfully.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

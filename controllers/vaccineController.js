@@ -1,5 +1,5 @@
 // controllers/vaccineController.js
-const vaccineService = require('../services/vaccineService');
+const vaccineService = require('../services/vaccineService.js');
 
 /**
  * Create Vaccine for an Animal
@@ -8,10 +8,10 @@ const createVaccine = async (req, res) => {
   try {
     const { animalId, current_condition, history_items } = req.body;
     const vaccine = await vaccineService.createVaccine(animalId, { current_condition, history_items });
-    res.status(201).json(vaccine);
+    res.status(201).json({success: true, data: vaccine});
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -23,12 +23,12 @@ const getVaccineByAnimalId = async (req, res) => {
     const { animalId } = req.params;
     const vaccine = await vaccineService.getVaccineByAnimalId(animalId);
     if (!vaccine) {
-      return res.status(404).json({ message: 'Vaccine data not found for this animal.' });
+      return res.status(404).json({ success: false, message: 'Vaccine data not found for this animal.' });
     }
-    res.status(200).json(vaccine);
+    res.status(200).json({success: true, data: vaccine});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -41,12 +41,12 @@ const updateVaccine = async (req, res) => {
     const updateData = req.body;
     const vaccine = await vaccineService.updateVaccine(id, updateData);
     if (!vaccine) {
-      return res.status(404).json({ message: 'Vaccine data not found.' });
+      return res.status(404).json({ success: false, message: 'Vaccine data not found.' });
     }
-    res.status(200).json(vaccine);
+    res.status(200).json({success: true, data: vaccine});
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({success: false, message: error.message });
   }
 };
 

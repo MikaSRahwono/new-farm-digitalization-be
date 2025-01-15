@@ -8,10 +8,10 @@ const createHealth = async (req, res) => {
   try {
     const { animalId, current_condition, history_items } = req.body;
     const health = await healthService.createHealth(animalId, { current_condition, history_items });
-    res.status(201).json(health);
+    res.status(201).json({ success: true, data: health });
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -23,12 +23,12 @@ const getHealthByAnimalId = async (req, res) => {
     const { animalId } = req.params;
     const health = await healthService.getHealthByAnimalId(animalId);
     if (!health) {
-      return res.status(404).json({ message: 'Health data not found for this animal.' });
+      return res.status(404).json({ success: false, message: 'Health data not found for this animal.' });
     }
-    res.status(200).json(health);
+    res.status(200).json({success: true, data: health});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -41,12 +41,12 @@ const updateHealth = async (req, res) => {
     const updateData = req.body;
     const health = await healthService.updateHealth(id, updateData);
     if (!health) {
-      return res.status(404).json({ message: 'Health data not found.' });
+      return res.status(404).json({ success: false, message: 'Health data not found.' });
     }
-    res.status(200).json(health);
+    res.status(200).json({success: true, data: health});
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -58,12 +58,12 @@ const deleteHealth = async (req, res) => {
     const { id } = req.params;
     const success = await healthService.deleteHealth(id);
     if (!success) {
-      return res.status(404).json({ message: 'Health data not found.' });
+      return res.status(404).json({ success: false, message: 'Health data not found.' });
     }
-    res.status(200).json({ message: 'Health data deleted successfully.' });
+    res.status(200).json({ success: true, message: 'Health data deleted successfully.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
