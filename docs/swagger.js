@@ -11,7 +11,7 @@ const options = {
     servers: [
       {
         url: process.env.NODE_ENV === 'production'
-          ? `http://${process.env.HOST_IP}/${process.env.PORT || 5000}`  // Change this to your production URL
+          ? `http://${process.env.HOST_IP}`  // Change this to your production URL
           : `http://localhost:${process.env.PORT || 5000}`,  // Localhost URL for development
         description: process.env.NODE_ENV === 'production' 
           ? 'Production server' 
