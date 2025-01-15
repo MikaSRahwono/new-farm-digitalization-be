@@ -17,11 +17,11 @@ app.use(express.json());
 app.use(cors({
     origin: '*',
   }));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use(helmet());
 app.use(morgan('combined'));
-
-// Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes
 app.use('/api', routes);
