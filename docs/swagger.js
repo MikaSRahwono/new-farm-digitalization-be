@@ -10,8 +10,12 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 5000}`,
-        description: 'Development server',
+        url: process.env.NODE_ENV === 'production'
+          ? `http://${process.env.HOST_IP}/${process.env.PORT || 5000}`  // Change this to your production URL
+          : `http://localhost:${process.env.PORT || 5000}`,  // Localhost URL for development
+        description: process.env.NODE_ENV === 'production' 
+          ? 'Production server' 
+          : 'Development server',
       },
     ],
   },
