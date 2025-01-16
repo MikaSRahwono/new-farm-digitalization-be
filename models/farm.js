@@ -14,8 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Farm.init({
-    name: DataTypes.STRING,
-    category: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING
+    },
+    category: {
+      type: DataTypes.ENUM('CowFarm', 'GoatFarm', 'SheepFarm'),
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'Farm',
