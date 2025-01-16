@@ -10,26 +10,32 @@ const { WeightData, YearlyData, MonthlyData } = require('../models');
 const createWeightData = async (animalId, yearlyData) => {
     const weight = await WeightData.create({ animalId });
 
-    const yearlyDataEntries = await Promise.all(yearlyData.map(async (yData) => {
-        const yearlyEntry = await YearlyData.create({
-            year: yData.year,
-            conditionType: "WeightData",
-            conditionId: weight.id,
-        });
+    await Promise.all(weight.yearlyDatas.map(async (yearlyDataEntry) => {
+    await MonthlyData.destroy({ where: { yearlyDataId: yearlyDataEntry.id } });
+    await YearlyData.destroy({ where: { id: yearlyDataEntry.id } });
+    }));
 
-        const monthData = yData.data.map(mData => ({
+    const yearlyDataEntries = await Promise.all(yearlyData.map(async (yData) => {
+    const yearlyEntry = await YearlyData.create({
+        year: yData.year,
+        conditionType: "WeightData",
+        conditionId: weight.id,
+    });
+
+    const monthData = yData.data.map(mData => ({
         month: mData.month,
         value: mData.value,
         yearlyDataId: yearlyEntry.id,
-        }));
-
-        await MonthlyData.bulkCreate(monthData);
-        return yearlyEntry;
     }));
 
+    await MonthlyData.bulkCreate(monthData);
+    return yearlyEntry;
+    }));
+
+    weight.yearlyDatas = yearlyDataEntries;
     return weight;
 };
-
+  
 /**
  * Get WeightData by Animal ID
  * @param {String} animalId

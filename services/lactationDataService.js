@@ -60,39 +60,40 @@ const updateLactationData = async (id, data) => {
     const { yearlyData } = data;
 
     const lactation = await LactationData.findByPk(id, {
-        include: [{
+    include: [{
         model: YearlyData,
         as: 'yearlyDatas',
         include: [{ model: MonthlyData, as: 'monthlyDatas' }],
-        }],
+    }],
     });
 
     if (!lactation) return null;
 
-    // Delete existing YearlyData and MonthlyData
-    await MonthlyData.destroy({ where: { yearlyDataId: lactation.id } });
-    await YearlyData.destroy({ where: { conditionId: lactation.id } });
+    await Promise.all(lactation.yearlyDatas.map(async (yearlyDataEntry) => {
+    await MonthlyData.destroy({ where: { yearlyDataId: yearlyDataEntry.id } });
+    await YearlyData.destroy({ where: { id: yearlyDataEntry.id } });
+    }));
 
-    // Recreate YearlyData and MonthlyData
     const yearlyDataEntries = await Promise.all(yearlyData.map(async (yData) => {
-        const yearlyEntry = await YearlyData.create({
+    const yearlyEntry = await YearlyData.create({
         year: yData.year,
-        conditionId: lactation.id, // Assuming conditionId is the lactation ID
-        });
+        conditionId: lactation.id,
+    });
 
-        // Create MonthlyData entries for each YearlyData entry
-        const monthData = yData.data.map(mData => ({
+    const monthData = yData.data.map(mData => ({
         month: mData.month,
         value: mData.value,
         yearlyDataId: yearlyEntry.id,
-        }));
-
-        await MonthlyData.bulkCreate(monthData);
-        return yearlyEntry;
     }));
 
+    await MonthlyData.bulkCreate(monthData);
+    return yearlyEntry;
+    }));
+
+    lactation.yearlyDatas = yearlyDataEntries;
     return lactation;
 };
+      
 
 /**
  * Delete LactationData

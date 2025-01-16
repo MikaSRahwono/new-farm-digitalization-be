@@ -69,26 +69,31 @@ const updateMilkData = async (id, yearlyData) => {
 
   if (!milk) return null;
 
-  // Delete existing YearlyData and MonthlyData
-  await YearlyData.destroy({ where: { animalId: milk.animalId } });
+  await Promise.all(milk.yearlyDatas.map(async (yearlyDataEntry) => {
+    await MonthlyData.destroy({ where: { yearlyDataId: yearlyDataEntry.id } });
 
-  // Recreate YearlyData and MonthlyData
-  const yearlyDataEntries = yearlyData.map(yData => ({
-    year: yData.year,
-    animalId: milk.animalId,
+    await YearlyData.destroy({ where: { id: yearlyDataEntry.id } });
   }));
 
-  const createdYearlyDatas = await YearlyData.bulkCreate(yearlyDataEntries, { returning: true });
+  const yearlyDataEntries = await Promise.all(yearlyData.map(async (yData) => {
+    const yearlyEntry = await YearlyData.create({
+      year: yData.year,
+      conditionType: "MilkData",
+      conditionId: milk.id,
+    });
 
-  for (let i = 0; i < createdYearlyDatas.length; i++) {
-    const monthData = yearlyData[i].data.map(mData => ({
+    const monthData = yData.data.map(mData => ({
       month: mData.month,
       value: mData.value,
-      yearlyDataId: createdYearlyDatas[i].id,
+      yearlyDataId: yearlyEntry.id,
     }));
-    await MonthlyData.bulkCreate(monthData);
-  }
 
+    await MonthlyData.bulkCreate(monthData);
+
+    return yearlyEntry;
+  }));
+
+  milk.yearlyDatas = yearlyDataEntries;
   return milk;
 };
 
