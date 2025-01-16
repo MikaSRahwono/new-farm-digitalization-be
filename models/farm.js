@@ -4,13 +4,18 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Farm extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Farm.belongsTo(models.User, {
+        foreignKey: 'ownerId',
+        as: 'farm',
+      });
+
+      Farm.belongsToMany(models.User, {
+        through: 'UserFarms',
+        as: 'operators',
+        foreignKey: 'farmId',
+        otherKey: 'userId',
+      });
     }
   }
   Farm.init({
@@ -20,7 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     category: {
       type: DataTypes.ENUM('CowFarm', 'GoatFarm', 'SheepFarm'),
       allowNull: false,
-    }
+    },
+    ownerId: {
+      type: DataTypes.INTEGER
+    },
   }, {
     sequelize,
     modelName: 'Farm',

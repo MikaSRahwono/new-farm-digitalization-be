@@ -7,13 +7,11 @@ const {
 module.exports = (sequelize) => {
   class Health extends Model {
     static associate(models) {
-      // Define association with Animal
       Health.belongsTo(models.Animal, {
         foreignKey: 'animalId',
         as: 'animal',
       });
 
-      // Define association with HistoryItem
       Health.hasMany(models.HistoryItem, {
         foreignKey: 'conditionId',
         constraints: false,

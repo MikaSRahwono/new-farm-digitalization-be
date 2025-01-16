@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Farms', {
+    await queryInterface.createTable('Users', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,19 +13,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      category: {
-        type: Sequelize.ENUM('CowFarm', 'GoatFarm', 'SheepFarm'),
+      email: {
+        type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
-      ownerId: {
-        type: Sequelize.INTEGER,
+      profile_url: {
+        type: Sequelize.STRING,
         allowNull: true,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -41,6 +36,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Farms');
+    await queryInterface.dropTable('Users');
   },
 };
