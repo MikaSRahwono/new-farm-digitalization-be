@@ -5,6 +5,7 @@ const router = express.Router();
 const userRoutes = require('./userRoutes');
 const farmRoutes = require('./farmRoutes');
 const farmRequestRoutes = require('./farmRequestRoutes');
+const authenticationRoutes = require('./authenticationRoutes');
 
 const animalRoutes = require('./animalRoutes');
 const healthRoutes = require('./healthRoutes');
@@ -20,6 +21,7 @@ router.use('/users', userRoutes);
 router.use('/farms', farmRoutes);
 router.use('/animals', animalRoutes);
 router.use('/farm-requests', farmRequestRoutes);
+router.use('/auth', authenticationRoutes);
 router.use('/', healthRoutes);
 router.use('/', vaccineRoutes);
 router.use('/', vitaminRoutes);

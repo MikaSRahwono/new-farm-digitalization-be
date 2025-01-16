@@ -13,9 +13,9 @@ const {
     try {
       const { farmId, operatorId } = req.body;
       const request = await createFarmRequest(farmId, operatorId);
-      res.status(201).json(request);
+      res.status(201).json({success: true, data: request});
     } catch (error) {
-      res.status(500).json({ message: 'Error creating farm request', error });
+      res.status(500).json({ success: false, message: 'Error creating farm request', error });
     }
   };
   
@@ -26,9 +26,9 @@ const {
     try {
       const { operatorId } = req.query;
       const requests = await getPendingRequests(operatorId ? Number(operatorId) : null); // Pass operatorId to the service
-      res.status(200).json(requests);
+      res.status(200).json({success: true, data: requests});
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching requests', error });
+      res.status(500).json({ success: false, message: 'Error fetching requests', error });
     }
   };
   
@@ -40,11 +40,11 @@ const {
     try {
       const requestId = req.params.id;
       const farm = await acceptRequest(requestId);
-      if (!farm) return res.status(404).json({ message: 'Request not found or already processed' });
+      if (!farm) return res.status(404).json({ success: false, message: 'Request not found or already processed' });
   
-      res.status(200).json(farm);
+      res.status(200).json({success: true, data: farm});
     } catch (error) {
-      res.status(500).json({ message: 'Error accepting request', error });
+      res.status(500).json({ success: false, message: 'Error accepting request', error });
     }
   };
   
@@ -57,9 +57,9 @@ const {
       const result = await rejectRequest(requestId);
       if (!result) return res.status(404).json({ message: 'Request not found or already processed' });
   
-      res.status(200).json({ message: 'Request rejected successfully' });
+      res.status(200).json({ success: true, message: 'Request rejected successfully' });
     } catch (error) {
-      res.status(500).json({ message: 'Error rejecting request', error });
+      res.status(500).json({success: false,  message: 'Error rejecting request', error });
     }
   };
   
