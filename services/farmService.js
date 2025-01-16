@@ -4,9 +4,20 @@ const { Farm } = require('../models');
  * Get all farms.
  * @returns {Promise<Array>} A promise that resolves to an array of farms.
  */
-const getAllFarms = async () => {
-    return await Farm.findAll();
+const getAllFarms = async (ownerId) => {
+    try {
+        const farms = await Farm.findAll({
+            where: {
+                ownerId: ownerId, // Filter farms by ownerId
+            },
+        });
+        return farms;
+    } catch (error) {
+        console.error("Error fetching farms:", error);
+        throw error;
+    }
 };
+
 
 /**
  * Get a farm by ID.

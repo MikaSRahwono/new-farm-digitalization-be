@@ -6,11 +6,12 @@ class FarmController {
      * Get all farms
      */
     static async getAllFarms(req, res) {
+        const { ownerId } = req.query; 
         try {
-        const farms = await FarmService.getAllFarms();
-        res.status(200).json(farms);
+            const farms = await FarmService.getAllFarms(ownerId);
+            res.status(200).json(farms);
         } catch (error) {
-        res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error.message });
         }
     }
 
@@ -32,10 +33,10 @@ class FarmController {
      */
     static async createFarm(req, res) {
         try {
-        const farm = await FarmService.createFarm(req.body);
-        res.status(201).json(farm);
+            const farm = await FarmService.createFarm(req.body);
+            res.status(201).json(farm);
         } catch (error) {
-        res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error.message });
         }
     }
 

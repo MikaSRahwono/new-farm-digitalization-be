@@ -5,6 +5,41 @@ const router = express.Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Farm:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *         - category
+ *         - ownerId
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: The farm's unique ID
+ *         name:
+ *           type: string
+ *           description: The name of the farm
+ *         category:
+ *           type: string
+ *           enum:
+ *             - CowFarm
+ *             - GoatFarm
+ *             - SheepFarm
+ *           description: The category/type of the farm
+ *         ownerId:
+ *           type: integer
+ *           description: The ID of the owner (User) of the farm
+ *         operators:
+ *           type: array
+ *           items:
+ *             type: integer
+ *           description: A list of operator IDs (Users) associated with the farm
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Farms
  *   description: API for managing farms
@@ -14,8 +49,15 @@ const router = express.Router();
  * @swagger
  * /api/farms:
  *   get:
- *     summary: Get all farms
+ *     summary: Get all farms by ownerId
  *     tags: [Farms]
+ *     parameters:
+ *       - in: query
+ *         name: ownerId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Owner ID to filter farms
  *     responses:
  *       200:
  *         description: List of farms

@@ -1,7 +1,33 @@
 const express = require('express');
-const UserController = require('../controllers/userController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *         - email
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: Unique identifier for the user
+ *         name:
+ *           type: string
+ *           description: Name of the user
+ *         email:
+ *           type: string
+ *           description: Email address of the user
+ *       example:
+ *         id: 1
+ *         name: "John Doe"
+ *         email: "john.doe@example.com"
+ */
 
 /**
  * @swagger
@@ -14,44 +40,48 @@ const router = express.Router();
  * @swagger
  * /api/users:
  *   get:
- *     summary: Get all users
+ *     summary: Retrieve a list of users
  *     tags: [Users]
  *     responses:
  *       200:
- *         description: List of users
+ *         description: A list of users
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Server error
  */
-router.get('/', UserController.getAllUsers);
+router.get('/', userController.getAllUsers);
 
 /**
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: Get a user by ID
+ *     summary: Get a single user by ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: integer
- *         required: true
- *         description: User ID
+ *         description: The user ID
  *     responses:
  *       200:
- *         description: User details
+ *         description: User data
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
+ *       500:
+ *         description: Server error
  */
-router.get('/:id', UserController.getUserById);
+router.get('/:id', userController.getUserById);
 
 /**
  * @swagger
@@ -72,8 +102,10 @@ router.get('/:id', UserController.getUserById);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Bad request
  */
-router.post('/', UserController.createUser);
+router.post('/', userController.createUser);
 
 /**
  * @swagger
@@ -84,10 +116,10 @@ router.post('/', UserController.createUser);
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: integer
- *         required: true
- *         description: User ID
+ *         description: The user ID
  *     requestBody:
  *       required: true
  *       content:
@@ -101,30 +133,36 @@ router.post('/', UserController.createUser);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Bad request
  *       404:
  *         description: User not found
+ *       500:
+ *         description: Server error
  */
-router.put('/:id', UserController.updateUser);
+router.put('/:id', userController.updateUser);
 
 /**
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Delete a user
+ *     summary: Delete a user by ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: integer
- *         required: true
- *         description: User ID
+ *         description: The user ID
  *     responses:
- *       204:
+ *       200:
  *         description: User deleted successfully
  *       404:
  *         description: User not found
+ *       500:
+ *         description: Server error
  */
-router.delete('/:id', UserController.deleteUser);
+router.delete('/:id', userController.deleteUser);
 
 module.exports = router;
