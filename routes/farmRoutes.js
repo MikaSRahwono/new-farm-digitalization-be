@@ -15,9 +15,6 @@ const router = express.Router();
  *         - category
  *         - ownerId
  *       properties:
- *         id:
- *           type: integer
- *           description: The farm's unique ID
  *         name:
  *           type: string
  *           description: The name of the farm
@@ -31,11 +28,6 @@ const router = express.Router();
  *         ownerId:
  *           type: integer
  *           description: The ID of the owner (User) of the farm
- *         operators:
- *           type: array
- *           items:
- *             type: integer
- *           description: A list of operator IDs (Users) associated with the farm
  */
 
 /**

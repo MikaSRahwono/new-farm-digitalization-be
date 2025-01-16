@@ -36,6 +36,15 @@ module.exports = {
       farm_name: {
         type: Sequelize.STRING
       },
+      farmId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Farms',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
       dad_name_id: {
         type: Sequelize.STRING
       },

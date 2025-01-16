@@ -92,6 +92,7 @@ const animalController = require('../controllers/animalController');
  *         - breed
  *         - type_id
  *         - farm_name
+ *         - farm_id
  *       properties:
  *         name_id:
  *           type: string
@@ -121,6 +122,9 @@ const animalController = require('../controllers/animalController');
  *         farm_name:
  *           type: string
  *           description: Name of the farm
+ *         farmId:
+ *           type: integer
+ *           description: Farm id
  *         dad_name_id:
  *           type: string
  *           description: Father's name ID (nullable)

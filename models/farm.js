@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'farmId',
         otherKey: 'userId',
       });
+      Farm.hasMany(models.Animal, {
+        foreignKey: 'farmId',
+        constraints: false,
+        scope: {
+          conditionType: 'Animal',
+        },
+        as: 'animals',
+      });
     }
   }
   Farm.init({

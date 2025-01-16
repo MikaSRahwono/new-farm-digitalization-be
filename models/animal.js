@@ -5,6 +5,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Animal extends Model {
     static associate(models) {
+      Animal.belongsTo(models.Farm, {
+        foreignKey: 'farmId',
+        as: 'farm',
+      });
+
       Animal.hasOne(models.Health, {
         foreignKey: 'animalId',
         as: 'health',
@@ -48,7 +53,11 @@ module.exports = (sequelize, DataTypes) => {
     dad_name_id: DataTypes.STRING,
     mom_name_id: DataTypes.STRING,
     grandpa_name_id: DataTypes.STRING,
-    grandma_name_id: DataTypes.STRING
+    grandma_name_id: DataTypes.STRING,
+    farmId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Animal',
