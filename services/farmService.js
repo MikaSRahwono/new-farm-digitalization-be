@@ -1,4 +1,4 @@
-const { Farm } = require('../models');
+const { Farm, User } = require('../models');
 
 /**
  * Get all farms.
@@ -8,8 +8,13 @@ const getAllFarms = async (ownerId) => {
     try {
         const farms = await Farm.findAll({
             where: {
-                ownerId: ownerId, // Filter farms by ownerId
+                ownerId: ownerId,
             },
+            include: [{
+                model: User,
+                as: 'operators',
+                attributes: ['id', 'name', 'email'],
+              }],
         });
         return farms;
     } catch (error) {

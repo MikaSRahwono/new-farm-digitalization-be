@@ -24,7 +24,6 @@ const router = express.Router();
  *           type: string
  *           description: Email address of the user
  *       example:
- *         id: 1
  *         name: "John Doe"
  *         email: "john.doe@example.com"
  */

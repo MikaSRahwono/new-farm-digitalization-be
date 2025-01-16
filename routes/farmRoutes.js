@@ -161,42 +161,4 @@ router.put('/:id', FarmController.updateFarm);
  */
 router.delete('/:id', FarmController.deleteFarm);
 
-/**
- * @swagger
- * /api/farms/{id}/operators:
- *   post:
- *     summary: Add operators to a farm
- *     tags: [Farms]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: Farm ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userIds:
- *                 type: array
- *                 items:
- *                   type: integer
- *             required:
- *               - userIds
- *     responses:
- *       200:
- *         description: Operators added successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Farm'
- *       404:
- *         description: Farm not found
- */
-router.post('/:id/operators', FarmController.addOperators);
-
 module.exports = router;

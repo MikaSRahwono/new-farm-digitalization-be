@@ -63,19 +63,6 @@ class FarmController {
         res.status(500).json({ error: error.message });
         }
     }
-
-    /**
-     * Add operator to Farm
-     */
-    static async addOperators(req, res) {
-        try {
-        const { userIds } = req.body;
-        const farm = await FarmService.addOperators(req.params.id, userIds);
-        res.status(200).json(farm);
-        } catch (error) {
-        res.status(500).json({ error: error.message });
-        }
-    }
 }
 
 module.exports = FarmController;
