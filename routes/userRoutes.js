@@ -13,6 +13,7 @@ const router = express.Router();
  *         - id
  *         - name
  *         - email
+ *         - role
  *       properties:
  *         id:
  *           type: integer
@@ -23,6 +24,9 @@ const router = express.Router();
  *         email:
  *           type: string
  *           description: Email address of the user
+ *         role:
+ *           type: string
+ *           description: Role of the user
  *       example:
  *         name: "John Doe"
  *         email: "john.doe@example.com"
