@@ -59,8 +59,8 @@ const updateWeightData = async (id, yearlyData) => {
   const lactation = await WeightData.findByPk(id, {
     include: [{
       model: YearlyData,
-      as: 'yearlyData',
-      include: [{ model: MonthlyData, as: 'monthlyData' }],
+      as: 'yearlyDatas',
+      include: [{ model: MonthlyData, as: 'monthlyDatas' }],
     }],
   });
 
