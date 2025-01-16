@@ -57,7 +57,15 @@ const getWeightDataByAnimalId = async (animalId) => {
  * @returns {Promise<WeightData>}
  */
 const updateWeightData = async (id, yearlyData) => {
-    const weight = await WeightData.create({ animalId });
+    const weight = await WeightData.findByPk(id, {
+        include: [{
+          model: YearlyData,
+          as: 'yearlyDatas',
+          include: [{ model: MonthlyData, as: 'monthlyDatas' }],
+        }],
+    });
+
+    if (!weight) return null;
 
     await Promise.all(weight.yearlyDatas.map(async (yearlyDataEntry) => {
       await MonthlyData.destroy({ where: { yearlyDataId: yearlyDataEntry.id } });
