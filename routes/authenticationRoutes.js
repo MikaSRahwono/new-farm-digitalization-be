@@ -1,12 +1,13 @@
 const express = require('express');
 const { register, login } = require('../controllers/authenticationController');
+const verifyToken = require('../middlewares/authMiddleware'); // Import the JWT middleware
 const router = express.Router();
 
 /**
  * @swagger
  * tags:
  *   name: Authentication
- *   description: API for user authentication (register and login)
+ *   description: API for user authentication (register, login, self info)
  */
 
 /**
@@ -100,5 +101,57 @@ router.post('/register', register);
  *         description: Server error
  */
 router.post('/login', login);
+
+/**
+ * @swagger
+ * /api/auth/self:
+ *   get:
+ *     summary: Get the details of the authenticated user
+ *     tags: [Authentication]
+ *     security:
+ *       - BearerAuth: []  # This refers to the Bearer token used for authentication
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer token for authentication
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: "Bearer <your-jwt-token>"
+ *     responses:
+ *       200:
+ *         description: User details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 profile_url:
+ *                   type: string
+ *                   description: URL to the user's profile picture
+ *                 role:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized, invalid token
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/self', verifyToken, (req, res) => {
+  res.status(200).json({
+    id: req.user.id,
+    name: req.user.name,
+    email: req.user.email,
+    profile_url: req.user.profile_url,
+    role: req.user.role,
+  });
+});
 
 module.exports = router;

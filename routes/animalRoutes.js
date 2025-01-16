@@ -6,80 +6,6 @@ const animalController = require('../controllers/animalController');
  * @swagger
  * components:
  *   schemas:
- *     HistoryItem:
- *       type: object
- *       required:
- *         - title
- *         - value
- *       properties:
- *         title:
- *           type: string
- *           description: Title of the history item
- *         value:
- *           type: string
- *           description: Value of the history item
- *       example:
- *         title: "Health Checkup"
- *         value: "October 2022"
- *
- *     Condition:
- *       type: object
- *       required:
- *         - current_condition
- *         - history_items
- *       properties:
- *         current_condition:
- *           type: string
- *           description: Current condition
- *         history_items:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/HistoryItem'
- *       example:
- *         current_condition: "Healthy"
- *         history_items:
- *           - title: "Health Checkup"
- *             value: "October 2022"
- *           - title: "Vaccination"
- *             value: "December 2022"
- *
- *     YearlyDataItem:
- *       type: object
- *       required:
- *         - month
- *         - value
- *       properties:
- *         month:
- *           type: string
- *           description: Month of the year
- *         value:
- *           type: integer
- *           description: Value for the month
- *       example:
- *         month: "Jan"
- *         value: 1100
- *
- *     YearlyData:
- *       type: object
- *       required:
- *         - year
- *         - data
- *       properties:
- *         year:
- *           type: integer
- *           description: Year of the data
- *         data:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/YearlyDataItem'
- *       example:
- *         year: 2018
- *         data:
- *           - month: "Jan"
- *             value: 1100
- *           - month: "Feb"
- *             value: 5500
- *
  *     Animal:
  *       type: object
  *       required:
@@ -93,6 +19,9 @@ const animalController = require('../controllers/animalController');
  *         - type_id
  *         - farm_name
  *         - farm_id
+ *         - grade
+ *         - condition
+ *         - status
  *       properties:
  *         name_id:
  *           type: string
@@ -116,6 +45,9 @@ const animalController = require('../controllers/animalController');
  *         breed:
  *           type: string
  *           description: Breed of the animal
+ *         category:
+ *           type: string
+ *           description: Category of the animal
  *         type_id:
  *           type: string
  *           description: Type ID
@@ -137,6 +69,34 @@ const animalController = require('../controllers/animalController');
  *         grandma_name_id:
  *           type: string
  *           description: Grandmother's name ID (nullable)
+ *         grade:
+ *           type: string
+ *           description: Grade of the animal (nullable)
+ *         condition:
+ *           type: string
+ *           description: Condition of the animal (nullable)
+ *         status:
+ *           type: string
+ *           description: Status of the animal (nullable)
+ *       example:
+ *         name_id: "A001"
+ *         gender: "MALE"
+ *         dob: "2020-01-01"
+ *         weight: "300kg"
+ *         phase: "Growing"
+ *         photo_url: "http://example.com/photo.jpg"
+ *         breed: "Jersey"
+ *         category: "Kambing"
+ *         type_id: "Dairy"
+ *         farm_name: "Farm A"
+ *         farmId: 1
+ *         dad_name_id: "D001"
+ *         mom_name_id: "M001"
+ *         grandpa_name_id: "G001"
+ *         grandma_name_id: "G002"
+ *         grade: "A"
+ *         condition: "Sehat"
+ *         status: "Tersedia"
  */
 
 /**

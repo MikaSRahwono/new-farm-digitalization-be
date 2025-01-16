@@ -24,6 +24,18 @@ module.exports = {
       phase: {
         type: Sequelize.STRING
       },
+      category: {
+        type: Sequelize.STRING
+      },
+      grade: {
+        type: Sequelize.STRING
+      },
+      condition: {
+        type: Sequelize.STRING
+      },
+      status: {
+        type: Sequelize.STRING
+      },
       photo_url: {
         type: Sequelize.STRING
       },
