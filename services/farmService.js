@@ -10,11 +10,19 @@ const getAllFarms = async (ownerId) => {
             where: {
                 ownerId: ownerId,
             },
-            include: [{
-                model: User,
-                as: 'operators',
-                attributes: ['id', 'name', 'email'],
-              }],
+            include: [
+                {
+                    model: User,
+                    as: 'operators',
+                    attributes: ['id', 'name', 'email'],
+                },
+                {
+                    model: User,
+                    as: 'owner',
+                    attributes: ['id', 'name', 'email'],
+                },
+              
+            ],
         });
         return farms;
     } catch (error) {

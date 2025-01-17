@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Farm.belongsTo(models.User, {
         foreignKey: 'ownerId',
-        as: 'farm',
+        as: 'owner',
       });
 
       Farm.belongsToMany(models.User, {
