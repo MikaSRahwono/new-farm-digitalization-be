@@ -38,22 +38,30 @@ const getAllFarms = async (ownerId) => {
 const getFarmsByOperator = async (operatorId) => {
     try {
         const farms = await Farm.findAll({
-            include: [{
+            include: [
+            {
                 model: User,
                 as: 'operators',
                 where: {
                     id: operatorId
                 },
-                attributes: ['id', 'name', 'email'],
-            }],
+                attributes: ['id', 'name', 'email', 'profile_url', 'role'],
+            },
+            {
+                model: User,
+                as: 'owner',
+                attributes: ['id', 'name', 'email', 'profile_url', 'role'],
+            },
+        ],
         });
-        return farms;
+
+        // If no farms are found, return success with an empty array
+        return farms.length === 0 ? [] : farms;
     } catch (error) {
         console.error("Error fetching farms by operator:", error);
         throw error;
     }
 };
-
 /**
  * Get a farm by ID.
  * @param {number} id - The ID of the farm.
