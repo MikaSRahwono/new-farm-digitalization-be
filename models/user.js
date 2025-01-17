@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     profile_url: DataTypes.STRING,
     role: DataTypes.STRING,
+    last_time_online: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,

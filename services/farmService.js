@@ -14,12 +14,12 @@ const getAllFarms = async (ownerId) => {
                 {
                     model: User,
                     as: 'operators',
-                    attributes: ['id', 'name', 'email'],
+                    attributes: ['id', 'name', 'email', 'profile_url', 'role'],
                 },
                 {
                     model: User,
                     as: 'owner',
-                    attributes: ['id', 'name', 'email'],
+                    attributes: ['id', 'name', 'email', 'profile_url', 'role'],
                 },
               
             ],
