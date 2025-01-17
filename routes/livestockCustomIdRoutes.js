@@ -114,7 +114,7 @@ router.post('/increment', LivestockCustomIdController.incrementLastNumber);
 
 /**
  * @swagger
- * /api/livestock-custom-ids/changePrefix:
+ * /api/livestock-custom-ids/change-prefix:
  *   put:
  *     summary: Change the custom prefix and reset last_number to 0
  *     tags:
@@ -147,6 +147,6 @@ router.post('/increment', LivestockCustomIdController.incrementLastNumber);
  *       500:
  *         description: Internal server error
  */
-router.put('/changePrefix', LivestockCustomIdController.changePrefix);
+router.put('/change-prefix', LivestockCustomIdController.changePrefix);
 
 module.exports = router;
