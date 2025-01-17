@@ -22,9 +22,6 @@ class FarmController {
         const { operatorId } = req.params;
         try {
             const farms = await FarmService.getFarmsByOperator(operatorId);
-            if (!farms || farms.length === 0) {
-                return res.status(404).json({ error: 'No farms found for this operator' });
-            }
             res.status(200).json({ success: true, data: farms });
         } catch (error) {
             res.status(500).json({ success: false, error: error.message });
