@@ -57,12 +57,12 @@ class StatisticsService {
       // Increment total count for the farm
       farmStats.total += 1;
 
-      if (animal.gender === 'Male') {
+      if (animal.gender === 'MALE') {
         farmStats.totalMale += 1;
 
         // Phase statistics for male animals
         farmStats.malePhaseStats[animal.phase] = (farmStats.malePhaseStats[animal.phase] || 0) + 1;
-      } else if (animal.gender === 'Female') {
+      } else if (animal.gender === 'FEMALE') {
         farmStats.totalFemale += 1;
 
         // Phase statistics for female animals
