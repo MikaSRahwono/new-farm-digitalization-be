@@ -27,20 +27,22 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: integer
+ *             type: object
  *             properties:
  *               farmId:
  *                 type: integer
  *                 description: Farm id to be requested
- *               operatorId:
- *                 type: integer
- *                 description: ID of the farm owner
+ *               email:
+ *                 type: string
+ *                 description: Email of the farm operator
  *             example:
  *               farmId: 2
- *               operatorId: 1
+ *               email: "operator@example.com"
  *     responses:
  *       201:
  *         description: Farm request created successfully
+ *       400:
+ *         description: User not found for the provided email
  *       500:
  *         description: Error creating farm request
  */

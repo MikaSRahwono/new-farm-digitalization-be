@@ -6,8 +6,16 @@ const { FarmRequest, Farm, User } = require('../models');
  * @param {number} operatorId - The ID of the farm owner.
  * @returns {Promise<Object>} The created farm request.
  */
-const createFarmRequest = async (farmId, operatorId) => {
-  return await FarmRequest.create({ farmId, operatorId });
+const createFarmRequest = async (farmId, email) => {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    const operatorId = user.id;
+
+    return await FarmRequest.create({ farmId, operatorId });
 };
 
 /**

@@ -10,14 +10,17 @@ const {
    * Controller to handle creating a farm request.
    */
   const createRequest = async (req, res) => {
+    const { farmId, email } = req.body;
+
     try {
-      const { farmId, operatorId } = req.body;
-      const request = await createFarmRequest(farmId, operatorId);
-      res.status(201).json({success: true, data: request});
+        const request = await createFarmRequest(farmId, email);
+        
+        res.status(201).json({success: true, data: request});
     } catch (error) {
-      res.status(500).json({ success: false, message: 'Error creating farm request', error });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Error creating farm request', error });
     }
-  };
+};
   
   /**
    * Controller to fetch all pending farm requests.
