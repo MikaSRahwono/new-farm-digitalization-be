@@ -3,13 +3,29 @@ const FarmService = require('../services/farmService');
 
 class FarmController {
     /**
-     * Get all farms
+     * Get all farms by ownerId
      */
     static async getAllFarms(req, res) {
-        const { ownerId } = req.query; 
+        const { ownerId } = req.query;
         try {
             const farms = await FarmService.getAllFarms(ownerId);
             res.status(200).json({success: true, data: farms});
+        } catch (error) {
+            res.status(500).json({ success: false, error: error.message });
+        }
+    }
+
+    /**
+     * Get all farms by operatorId
+     */
+    static async getFarmsByOperator(req, res) {
+        const { operatorId } = req.params;
+        try {
+            const farms = await FarmService.getFarmsByOperator(operatorId);
+            if (!farms || farms.length === 0) {
+                return res.status(404).json({ error: 'No farms found for this operator' });
+            }
+            res.status(200).json({ success: true, data: farms });
         } catch (error) {
             res.status(500).json({ success: false, error: error.message });
         }
@@ -20,11 +36,11 @@ class FarmController {
      */
     static async getFarmById(req, res) {
         try {
-        const farm = await FarmService.getFarmById(req.params.id);
-        if (!farm) return res.status(404).json({ error: 'Farm not found' });
-        res.status(200).json({success: true, data: farm});
+            const farm = await FarmService.getFarmById(req.params.id);
+            if (!farm) return res.status(404).json({ error: 'Farm not found' });
+            res.status(200).json({success: true, data: farm});
         } catch (error) {
-        res.status(500).json({success: false,  error: error.message });
+            res.status(500).json({success: false,  error: error.message });
         }
     }
 
@@ -45,10 +61,10 @@ class FarmController {
      */
     static async updateFarm(req, res) {
         try {
-        const farm = await FarmService.updateFarm(req.params.id, req.body);
-        res.status(200).json({success: true, data: farm});
+            const farm = await FarmService.updateFarm(req.params.id, req.body);
+            res.status(200).json({success: true, data: farm});
         } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+            res.status(500).json({ success: false, error: error.message });
         }
     }
 
@@ -57,10 +73,10 @@ class FarmController {
      */
     static async deleteFarm(req, res) {
         try {
-        await FarmService.deleteFarm(req.params.id);
-        res.status(204).send();
+            await FarmService.deleteFarm(req.params.id);
+            res.status(204).send();
         } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+            res.status(500).json({ success: false, error: error.message });
         }
     }
 }

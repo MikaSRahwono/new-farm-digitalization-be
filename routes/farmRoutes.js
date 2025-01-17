@@ -64,6 +64,31 @@ router.get('/', FarmController.getAllFarms);
 
 /**
  * @swagger
+ * /api/farms/operator/{operatorId}:
+ *   get:
+ *     summary: Get all farms by operatorId
+ *     tags: [Farms]
+ *     parameters:
+ *       - in: path
+ *         name: operatorId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Operator ID to filter farms
+ *     responses:
+ *       200:
+ *         description: List of farms managed by the operator
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Farm'
+ */
+router.get('/operator/:operatorId', FarmController.getFarmsByOperator);
+
+/**
+ * @swagger
  * /api/farms/{id}:
  *   get:
  *     summary: Get a farm by ID

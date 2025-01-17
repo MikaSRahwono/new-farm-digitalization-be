@@ -23,6 +23,28 @@ const getAllFarms = async (ownerId) => {
     }
 };
 
+/**
+ * Get all farms for a specific operator.
+ * @returns {Promise<Array>} A promise that resolves to an array of farms.
+ */
+const getFarmsByOperator = async (operatorId) => {
+    try {
+        const farms = await Farm.findAll({
+            include: [{
+                model: User,
+                as: 'operators',
+                where: {
+                    id: operatorId
+                },
+                attributes: ['id', 'name', 'email'],
+            }],
+        });
+        return farms;
+    } catch (error) {
+        console.error("Error fetching farms by operator:", error);
+        throw error;
+    }
+};
 
 /**
  * Get a farm by ID.
@@ -73,6 +95,7 @@ const deleteFarm = async (id) => {
 
 module.exports = {
     getAllFarms,
+    getFarmsByOperator,
     getFarmById,
     createFarm,
     updateFarm,
