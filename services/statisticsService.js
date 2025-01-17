@@ -11,7 +11,8 @@ class StatisticsService {
       },
     });
 
-    return this.calculateFarmStatistics(cows); // Calculate statistics for the specified farm
+    const stats = await this.calculateFarmStatistics(cows); // Calculate statistics for the specified farm
+    return { success: true, data: stats }; // Return response in the desired format
   }
 
   async getGoatStatistics(farmId) {
@@ -22,7 +23,8 @@ class StatisticsService {
       },
     });
 
-    return this.calculateFarmStatistics(goats); // Calculate statistics for the specified farm
+    const stats = await this.calculateFarmStatistics(goats); // Calculate statistics for the specified farm
+    return { success: true, data: stats }; // Return response in the desired format
   }
 
   async getSheepStatistics(farmId) {
@@ -33,7 +35,8 @@ class StatisticsService {
       },
     });
 
-    return this.calculateFarmStatistics(sheep); // Calculate statistics for the specified farm
+    const stats = await this.calculateFarmStatistics(sheep); // Calculate statistics for the specified farm
+    return { success: true, data: stats }; // Return response in the desired format
   }
 
   /**
