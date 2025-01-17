@@ -15,6 +15,7 @@ const createFarmRequest = async (farmId, email) => {
 
     const operatorId = user.id;
 
+
     return await FarmRequest.create({ farmId, operatorId });
 };
 
@@ -28,6 +29,18 @@ const getPendingRequests = async (operatorId) => {
         status: 'PENDING',
         operatorId: operatorId,
       },
+      include: [
+        {
+            model: Farm,
+            as: 'farm',
+            required: false,
+        },
+        {
+            model: User,
+            as: 'operator',
+            required: false,
+        }
+      ],
     });
   };
 
