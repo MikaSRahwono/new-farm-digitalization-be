@@ -119,34 +119,32 @@ class StatisticsService {
       });
   
       const summary = {
-        yearlyData: [],
+        yearlyDatas: [],
       };
   
       animals.forEach((animal) => {
         const { lactationData } = animal;
-        console.log(animal)
-        console.log(lactationData)
         if (!lactationData) return;
   
         lactationData.yearlyDatas.forEach((yearlyData) => {
-          let yearEntry = summary.yearlyData.find(
+          let yearEntry = summary.yearlyDatas.find(
             (entry) => entry.year === yearlyData.year
           );
   
           if (!yearEntry) {
             yearEntry = {
               year: yearlyData.year,
-              data: Array.from({ length: 12 }, (_, i) => ({
+              monthlyDatas: Array.from({ length: 12 }, (_, i) => ({
                 month: new Date(0, i).toLocaleString('default', { month: 'short' }),
                 value: 0,
               })),
             };
-            summary.yearlyData.push(yearEntry);
+            summary.yearlyDatas.push(yearEntry);
           }
   
           yearlyData.monthlyDatas.forEach((monthlyData) => {
             const monthIndex = new Date(`${monthlyData.month} 1`).getMonth();
-            yearEntry.data[monthIndex].value += monthlyData.value;
+            yearEntry.monthlyDatas[monthIndex].value += monthlyData.value;
           });
         });
       });
@@ -188,7 +186,7 @@ class StatisticsService {
       });
   
       const summary = {
-        yearlyData: [],
+        yearlyDatas: [],
       };
   
       animals.forEach((animal) => {
@@ -198,24 +196,24 @@ class StatisticsService {
         if (!milkData) return;
   
         milkData.yearlyDatas.forEach((yearlyData) => {
-          let yearEntry = summary.yearlyData.find(
+          let yearEntry = summary.yearlyDatas.find(
             (entry) => entry.year === yearlyData.year
           );
   
           if (!yearEntry) {
             yearEntry = {
               year: yearlyData.year,
-              data: Array.from({ length: 12 }, (_, i) => ({
+              monthlyDatas: Array.from({ length: 12 }, (_, i) => ({
                 month: new Date(0, i).toLocaleString('default', { month: 'short' }),
                 value: 0,
               })),
             };
-            summary.yearlyData.push(yearEntry);
+            summary.yearlyDatas.push(yearEntry);
           }
   
           yearlyData.monthlyDatas.forEach((monthlyData) => {
             const monthIndex = new Date(`${monthlyData.month} 1`).getMonth();
-            yearEntry.data[monthIndex].value += monthlyData.value;
+            yearEntry.monthlyDatas[monthIndex].value += monthlyData.value;
           });
         });
       });
