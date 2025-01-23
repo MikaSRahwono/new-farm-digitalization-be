@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       Lactation.hasMany(models.LactationChild, {
         foreignKey: 'lactationId',
         constraints: false,
-        scope: {
-          conditionType: 'Lactation',
-        },
         as: 'lactationChilds',
       });
     }
