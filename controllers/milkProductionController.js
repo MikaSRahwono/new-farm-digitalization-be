@@ -10,9 +10,9 @@ class MilkProductionController {
   static async createMilkProduction(req, res) {
     try {
       const milkProduction = await MilkProductionService.createMilkProduction(req.body);
-      res.status(201).json(milkProduction);
+      res.status(201).json({success: true, data: milkProduction});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -25,9 +25,9 @@ class MilkProductionController {
     try {
       const { animalId } = req.params;
       const milkProductions = await MilkProductionService.getAllMilkProductionsByAnimalId(animalId);
-      res.status(200).json(milkProductions);
+      res.status(200).json({success: true, data: milkProductions});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -40,9 +40,9 @@ class MilkProductionController {
     try {
       const { id } = req.params;
       const milkProduction = await MilkProductionService.getMilkProductionById(id);
-      res.status(200).json(milkProduction);
+      res.status(200).json({success: true, data: milkProduction});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -55,9 +55,9 @@ class MilkProductionController {
     try {
       const { id } = req.params;
       const updatedMilkProduction = await MilkProductionService.updateMilkProduction(id, req.body);
-      res.status(200).json(updatedMilkProduction);
+      res.status(200).json({success: true, data: updatedMilkProduction});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -72,7 +72,7 @@ class MilkProductionController {
       await MilkProductionService.deleteMilkProduction(id);
       res.status(204).send();
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 }

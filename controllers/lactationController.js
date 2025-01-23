@@ -10,9 +10,9 @@ class LactationController {
     try {
       const { lactationData, lactationChildData } = req.body;
       const lactation = await LactationService.createLactation(lactationData, lactationChildData);
-      res.status(201).json(lactation);
+      res.status(201).json({success: true, data: lactation});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -25,9 +25,9 @@ class LactationController {
     try {
       const { animalId } = req.params;
       const lactations = await LactationService.getAllLactationsByAnimalId(animalId);
-      res.status(200).json(lactations);
+      res.status(200).json({success: true, data: lactations});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -40,9 +40,9 @@ class LactationController {
     try {
       const { id } = req.params;
       const lactation = await LactationService.getLactationById(id);
-      res.status(200).json(lactation);
+      res.status(200).json({success: true, data: lactation});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -55,9 +55,9 @@ class LactationController {
     try {
       const { id } = req.params;
       const updatedLactation = await LactationService.updateLactation(id, req.body);
-      res.status(200).json(updatedLactation);
+      res.status(200).json({success: true, data: updatedLactation});
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
@@ -72,7 +72,7 @@ class LactationController {
       await LactationService.deleteLactation(id);
       res.status(204).send();
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 }
