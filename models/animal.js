@@ -58,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     mom_name_id: DataTypes.STRING,
     grandpa_name_id: DataTypes.STRING,
     grandma_name_id: DataTypes.STRING,
+    spouse_id: DataTypes.STRING,
     farmId: {
       type: DataTypes.INTEGER,
       allowNull: false,
