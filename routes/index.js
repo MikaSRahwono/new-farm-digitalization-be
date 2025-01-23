@@ -17,6 +17,10 @@ const lactationDataRoutes = require('./lactationDataRoutes');
 const milkDataRoutes = require('./milkDataRoutes');
 const weightDataRoutes = require('./weightDataRoutes');
 
+const lactationRoutes = require('./lactationRoutes');
+const milkRoutes = require('./milkProductionRoutes');
+const weightRoutes = require('./weightRoutes');
+
 const livestockCustomIdRoutes = require('./livestockCustomIdRoutes');
 const activityRoutes = require('./activityRoutes');
 
@@ -30,6 +34,9 @@ router.use('/auth', authenticationRoutes);
 router.use('/livestock-custom-ids', livestockCustomIdRoutes);
 router.use('/activities', activityRoutes);
 router.use('/statistics', statisticsRoutes);
+router.use('/lactations', lactationRoutes);
+router.use('/milkproductions', milkRoutes);
+router.use('/weights', weightRoutes);
 router.use('/', healthRoutes);
 router.use('/', vaccineRoutes);
 router.use('/', vitaminRoutes);

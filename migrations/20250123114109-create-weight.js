@@ -1,34 +1,29 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('ActivityChanges', {
+    await queryInterface.createTable('Weights', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      what: {
-        type: Sequelize.STRING,
+      date: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
-      from: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      to: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      activityId: {
+      mass: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      animalId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
-          model: 'Activities', // Referencing the Activities table
+          model: 'Animals',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -44,6 +39,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ActivityChanges');
+    await queryInterface.dropTable('Weights');
   },
 };
